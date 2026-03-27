@@ -7,8 +7,8 @@
 ## 🌿 Overview
 This Capstone project integrates **green nanotechnology** with **artificial intelligence** to create a complete system that can both **synthesize** and **analyze nanoparticles**.
 
-- The **Biomedical Engineering Department** conducts **green synthesis** of nanoparticles and generates **SEM (Scanning Electron Microscope)** images.  
-- The **Software Engineering Department** develops an **AI-driven system** to automatically analyze these images and classify nanoparticles by **shape**, **size**, and **distribution**.
+- The **Biomedical Engineering Department** conducts **green synthesis** of nanoparticles and generates **SEM (Scanning Electron Microscope)/ TEM (Transmission Electron Microscope)** images.  
+- The **Software Engineering Department** develops an **AI-driven system** to automatically analyze these images and predict nanoparticles by **Mean Size**.
 
 Together, the two departments demonstrate how **AI accelerates materials research** and supports **sustainable nanotechnology**.
 
@@ -53,8 +53,8 @@ ai-powered-nanoparticle-synthesis/
 ---
 
 ## 🎯 Objectives
-- ✅ Automate the **classification of nanoparticles** in SEM images.  
-- ✅ Predict **shape (spherical / rod / cubic)**, **size (10–50 nm / 50–100 nm)**, and **distribution (uniform / clustered)**.  
+- ✅ Automate the **Manual estimation of nanoparticles size** in SEM/TEM images.  
+- ✅ Predict  nanoparticles **Mean size** as a continous value **(Regression)**.  
 - ✅ Achieve **≥ 85 % classification accuracy** using a CNN with data augmentation.  
 - ✅ Provide a **user-friendly web interface** for uploads, predictions, and history tracking.  
 - ✅ Ensure **GDPR / KVKK compliance** for all image data.
@@ -66,24 +66,24 @@ ai-powered-nanoparticle-synthesis/
 ### 🧪 Biomedical Engineering – Green Synthesis
 - Perform **plant-based (eco-friendly)** nanoparticle synthesis.  
 - Capture **SEM images** of synthesized nanoparticles.  
-- Provide labeled datasets (`shape`, `size`, `distribution`) for AI model training.  
+- Provide labeled datasets (`size`) for AI model training.  
 
 📁 Folder: `data/BME/`
 
 ---
 
 ### 💻 Software Engineering – AI & Web Development
-- Implement **image preprocessing, data augmentation, and CNN training** in TensorFlow.  
-- Build a **Django REST API** for image upload and real-time model inference.  
+- Implement **image preprocessing, data augmentation, and CNN training** in PyTorch.  
+- Build a **Flask REST API** for image upload and real-time model inference.  
 - Develop a **React-based UI** for user login, upload, results visualization, and history management.  
-- Integrate a **MySQL / SQLite database** for users, results, and logs.
+- Integrate a **SQLite database** for users, results, and logs.
 
 📁 Folders: `ml/`, `backend/`, `web/`
 
 ---
 
 ## 🔗 Integration Flow
-1. Biomedical team provides labeled SEM images.  
+1. Biomedical team provides labeled SEM/TEM images.  
 2. Software team preprocesses and trains the CNN model.  
 3. The trained model (`cnn_model.h5`) is integrated into Django for inference.  
 4. The user uploads SEM images through the React interface.  
@@ -94,11 +94,11 @@ ai-powered-nanoparticle-synthesis/
 ## 🧠 Technologies Used
 | Category | Tools / Frameworks |
 |-----------|--------------------|
-| Machine Learning | TensorFlow 2.16, scikit-learn, OpenCV, NumPy, Pandas |
-| Backend | Django 5.1, Django REST Framework, python-dotenv, CORS Headers |
+| Machine Learning | PyTorch, torchvision, Pandas, Pillow, Python stdlib |
+| Backend | Django 5.1, Django REST Framework, SimpleJWT, CORS Headers |
 | Frontend | React + Vite, Axios, TypeScript |
-| Database | SQLite (dev) / MySQL (production) |
-| DevOps & Docs | Git, VS Code, YAML configs, Markdown |
+| Database | SQLite (dev)|
+| DevOps & Docs | Git-based repo workflow, npm lockfile workflow, Markdown docs, ESLint config, and a Jupyter notebook artifact (with torch/numpy/pandas/matplotlib imports in notebook context) |
 
 ---
 
