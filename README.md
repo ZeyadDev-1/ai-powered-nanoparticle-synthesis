@@ -32,7 +32,7 @@ ai-powered-nanoparticle-synthesis/
 │ ├─ infer.py
 │ └─ config.yaml
 │
-├─ backend/ # Flask REST API
+├─ backend/ # Django REST API
 │ ├─ manage.py
 │ ├─ api/
 │ └─ media/
@@ -74,7 +74,7 @@ ai-powered-nanoparticle-synthesis/
 
 ### 💻 Software Engineering – AI & Web Development
 - Implement **image preprocessing, data augmentation, and CNN training** in PyTorch.  
-- Build a **Flask REST API** for image upload and real-time model inference.  
+- Build a **Django REST API** for image upload and real-time model inference.  
 - Develop a **React-based UI** for user login, upload, results visualization, and history management.  
 - Integrate a **SQLite database** for users, results, and logs.
 
