@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'; // Import Navigate
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App.tsx';
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 import UploadPage from './pages/UploadPage';
@@ -10,7 +10,8 @@ import RegisterPage from './pages/RegisterPage';
 import { PredictionProvider } from './context/PredictionContext';
 import { SnackbarProvider } from './context/SnackbarContext';
 import { AuthProvider } from './context/AuthContext';
-import ProtectedRoute from './components/ProtectedRoute'; // Import ProtectedRoute
+import ProtectedRoute from './components/ProtectedRoute';
+import { RootRedirect, LoginOrRegisterGate } from './components/AuthRouteGuards';
 
 // Define a basic MUI theme
 const theme = createTheme({
@@ -63,8 +64,7 @@ const theme = createTheme({
 
 // Placeholder components for routes
 // const HomePage = () => <div>Welcome to the Nanoparticle Synthesis App!</div>; // Removed HomePage
-const NotFoundPage = () => <div>404 - Page Not Found</div>;
-
+const notFoundElement = <div>404 - Page Not Found</div>;
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -76,15 +76,15 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <PredictionProvider>
               <Routes>
                 <Route path="/" element={<App />}>
-                  <Route index element={<Navigate to="/upload" replace />} /> {/* Redirect from root to /upload */}
-                  <Route path="login" element={<LoginPage />} />
-                  <Route path="register" element={<RegisterPage />} />
+                  <Route index element={<RootRedirect />} />
+                  <Route path="login" element={<LoginOrRegisterGate page={<LoginPage />} />} />
+                  <Route path="register" element={<LoginOrRegisterGate page={<RegisterPage />} />} />
                   {/* Protected Routes */}
                   <Route element={<ProtectedRoute />}>
                     <Route path="upload" element={<UploadPage />} />
                     <Route path="history" element={<HistoryPage />} />
                   </Route>
-                  <Route path="*" element={<NotFoundPage />} />
+                  <Route path="*" element={notFoundElement} />
                 </Route>
               </Routes>
             </PredictionProvider>
