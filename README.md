@@ -55,7 +55,7 @@ ai-powered-nanoparticle-synthesis/
 ## 🎯 Objectives
 - ✅ Automate the **Manual estimation of nanoparticles size** in SEM/TEM images.  
 - ✅ Predict  nanoparticles **Mean size** as a continous value **(Regression)**.  
-- ✅ Achieve **≥ 85 % classification accuracy** using a CNN with data augmentation.  
+- ✅ Achieve **≥ 85 % prediction accuracy** using a CNN with data augmentation.  
 - ✅ Provide a **user-friendly web interface** for uploads, predictions, and history tracking.  
 - ✅ Ensure **GDPR / KVKK compliance** for all image data.
 
