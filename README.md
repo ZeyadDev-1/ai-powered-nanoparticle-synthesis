@@ -24,7 +24,7 @@ ai-powered-nanoparticle-synthesis/
 │ ├─ PROCESSED/
 │ └─ labels.csv
 │
-├─ ml/ # Machine Learning (TensorFlow CNN)
+├─ ml/ # Machine Learning (PyTorch CNN)
 │ ├─ preprocess.py
 │ ├─ dataset.py
 │ ├─ model_cnn.py
@@ -32,7 +32,7 @@ ai-powered-nanoparticle-synthesis/
 │ ├─ infer.py
 │ └─ config.yaml
 │
-├─ backend/ # Django REST API
+├─ backend/ # Flask REST API
 │ ├─ manage.py
 │ ├─ api/
 │ └─ media/
