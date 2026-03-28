@@ -30,36 +30,45 @@ const RegisterPage: React.FC = () => {
     event.preventDefault();
     if (validate()) {
       try {
+        setErrors({});
         await registerUser({ username, email, password, password2: confirmPassword });
         showSnackbar('Registration successful! Please log in.', 'success');
         navigate('/login'); // Redirect to login page after successful registration
-      } catch (err: any) {
-        let errorMessages: string[] = [];
+      } catch (err: unknown) {
+        const nextErrors: { username?: string; email?: string; password?: string; confirmPassword?: string; nonFieldErrors?: string } = {};
+        const errorMessages: string[] = [];
+        const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred during registration.';
+
         try {
-          const backendErrors = JSON.parse(err.message);
+          const backendErrors = JSON.parse(errorMessage ?? '{}');
           for (const key in backendErrors) {
             if (Array.isArray(backendErrors[key])) {
-              backendErrors[key].forEach((msg: string) => {
-                if (key === 'non_field_errors') {
-                  errorMessages.push(msg);
-                } else {
-                  // Set field-specific errors if available
-                  setErrors(prev => ({ ...prev, [key]: msg }));
-                }
-              });
+              const message = backendErrors[key].join(' ');
+              if (key === 'non_field_errors') {
+                nextErrors.nonFieldErrors = message;
+                errorMessages.push(message);
+              } else if (key === 'password2') {
+                nextErrors.confirmPassword = message;
+                errorMessages.push(message);
+              } else if (key in nextErrors) {
+                nextErrors[key as keyof typeof nextErrors] = message;
+                errorMessages.push(message);
+              } else {
+                errorMessages.push(message);
+              }
+            } else if (typeof backendErrors[key] === 'string') {
+              errorMessages.push(backendErrors[key]);
             }
           }
-          if (backendErrors.non_field_errors) {
-            setErrors(prev => ({ ...prev, nonFieldErrors: backendErrors.non_field_errors.join(', ') }));
-          }
-        } catch (parseError) {
-          errorMessages.push('An unexpected error occurred during registration.');
+          setErrors(nextErrors);
+        } catch {
+          errorMessages.push(errorMessage);
         }
         
         if (errorMessages.length > 0) {
           showSnackbar(`Registration failed: ${errorMessages.join(' ')}`, 'error');
-        } else if (err.message) {
-           showSnackbar(`Registration failed: ${err.message}`, 'error');
+        } else if (errorMessage) {
+           showSnackbar(`Registration failed: ${errorMessage}`, 'error');
         } else {
            showSnackbar('An unknown error occurred during registration.', 'error');
         }

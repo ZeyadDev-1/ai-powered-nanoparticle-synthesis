@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useSnackbar } from '../context/SnackbarContext';
@@ -13,6 +13,12 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ redirectPath = '/login'
   const { isAuthenticated, loading } = useAuth(); // Get loading state
   const { showSnackbar } = useSnackbar();
 
+  useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      showSnackbar('You need to log in to view this page.', 'warning');
+    }
+  }, [isAuthenticated, loading, showSnackbar]);
+
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -22,7 +28,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ redirectPath = '/login'
   }
 
   if (!isAuthenticated) {
-    showSnackbar('You need to log in to view this page.', 'warning');
     return <Navigate to={redirectPath} replace />;
   }
 
