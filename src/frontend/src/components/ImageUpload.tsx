@@ -74,9 +74,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelect }) => {
         Upload SEM Image for Prediction
       </Typography>
       <Paper elevation={3} sx={{ p: 4 }}>
-        <Grid container spacing={3} direction="column" alignItems="center">
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
           {/* Image Preview and Drop Zone */}
-          <Grid item>
+          <Box>
             <Box
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
@@ -115,10 +115,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelect }) => {
                 </Typography>
               )}
             </Box>
-          </Grid>
+          </Box>
 
           {/* File input, button, and remove button */}
-          <Grid item>
+          <Box>
             <input
               accept="image/*"
               style={{ display: 'none' }}
@@ -146,10 +146,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelect }) => {
                     <HighlightOffIcon />
                 </IconButton>
             )}
-          </Grid>
+          </Box>
 
           {/* Selected file name and error */}
-          <Grid item>
+          <Box>
             {selectedFile && (
               <Typography variant="body1" align="center" sx={{ mt: 1 }}>
                 Selected: {selectedFile.name}
@@ -160,8 +160,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelect }) => {
                 {error}
               </Typography>
             )}
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Paper>
     </Box>
   );
