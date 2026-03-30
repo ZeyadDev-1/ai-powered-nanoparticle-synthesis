@@ -116,16 +116,23 @@ axios.interceptors.response.use(
   response => response,
   async error => {
     const originalRequest = error.config;
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    const requestUrl: string = originalRequest?.url || '';
+    const isRefreshRequest = requestUrl.includes('/token/refresh/');
+
+    if (error.response?.status === 401 && !originalRequest?._retry && !isRefreshRequest) {
       originalRequest._retry = true;
       try {
         const refreshToken = getRefreshToken();
         if (refreshToken) {
-          const response = await axios.post<{ access: string }>(`${API_BASE_URL}/token/refresh/`, {
+          const response = await axios.post<{ access: string; refresh?: string }>(`${API_BASE_URL}/token/refresh/`, {
             refresh: refreshToken,
           });
           const newAccessToken = response.data.access;
+          const newRefreshToken = response.data.refresh;
           localStorage.setItem('access_token', newAccessToken);
+          if (newRefreshToken) {
+            localStorage.setItem('refresh_token', newRefreshToken);
+          }
           setAuthHeader(newAccessToken);
           // Retry original request with new token
           originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
